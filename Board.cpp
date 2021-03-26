@@ -8,19 +8,31 @@
 #include <stdexcept>
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 namespace ariel
 {   
     // Default and minimal size for a message board
-    const int DEFAULT_SIZE = 1000;
+    const int DEFAULT_SIZE = 100;
     const int MIN_SIZE = 1;
+
     
     // Default constructor
     Board::Board(){
-        this->rows = DEFAULT_SIZE;
-        this->cols = DEFAULT_SIZE;
+
+        // No size is given as parameter so initializing to default size
+        rows = DEFAULT_SIZE;
+        cols = DEFAULT_SIZE;
+
+        // Initializing vector with number of rows
+        board.resize(rows);
+        
+        // Initializing each row of the vector with number of columns and the empty space char
+        for(int i = 0; i < this->rows; i++){
+            board[i].resize(cols, EMPTY_SPACE);
+        }
     }
 
     // Constructor

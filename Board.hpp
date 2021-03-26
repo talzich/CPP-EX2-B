@@ -5,12 +5,16 @@
 
 #include "Direction.hpp"
 #include <string>
+#include <vector>
 
 namespace ariel{
+
+    const char EMPTY_SPACE = '_';
 
     class Board{
         
         unsigned int rows, cols;
+        vector< vector<char> > board;
 
         public:
             // Constructors
@@ -34,8 +38,5 @@ namespace ariel{
             // Returns number of rows and columns of this board
             int get_rows();
             int get_cols();
-
-            
-
     };
 }
