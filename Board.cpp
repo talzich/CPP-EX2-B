@@ -36,7 +36,7 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     unsigned int board_rows = b.size();
     unsigned int board_cols = b[MIN_SIZE].size();
 
-    // Marking directions for shorter access later
+    // Marking  for shorter access later
     int horiz = (dir == Direction::Horizontal);
     int vert = (dir == Direction::Vertical);
 
@@ -139,10 +139,26 @@ int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
     // Length of message
     unsigned int len = msg.size();
 
+    // Resizing the board, if necessary
     vector<unsigned int> new_size = resize_board(row, col, dir, msg, this->board);
     
+    // Updating board size
     this->rows = new_size[ROWS];
     this->cols = new_size[COLS];
+    
+    if(dir == Direction::Horizontal){
+        // Posting message
+        for(unsigned int i = 0; i < len; i++){
+            this->board[row][col+i] = msg[i];
+        }
+    }
+
+    else{
+        // Posting message
+        for(unsigned int i = 0; i < len; i++){
+            this->board[row+i][col] = msg[i];
+        }
+    }
     return 0;
 }
 
@@ -150,7 +166,23 @@ int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
 // appropriate location and diraction in this message board
 string Board::read(unsigned int row, unsigned int col, Direction dir, unsigned int len)
 {
-    return " ";
+    if((row > this->rows) || ((row+len > this->rows) && dir == Direction::Vertical)){
+        throw out_of_range("Message location and/or length exceeds board size");
+    }
+    if((col > this->cols) || ((col+len > this->cols) && dir == Direction::Horizontal)){
+        throw out_of_range("Message location and/or length exceeds board size");
+    }
+
+    string msg;
+    
+    if(dir == Direction::Horizontal){
+        for(unsigned int i = 0; i < len; i++){
+            msg += this->board[row][col+i];
+        }
+    }
+
+    return msg;
+    
 }
 
 // This message will print out the entire message board
@@ -181,35 +213,7 @@ unsigned int Board::get_cols()
 
 int main(void){
 
-
-    // Testing default constructor
-
-    Board *a = new Board();
-    // unsigned int a_rows = a->get_rows();
-    // unsigned int a_cols = a->get_cols();
-
-    // cout << "Board a default rows: " << a_rows << " default cols: " << a_cols << endl;
-
-    // Testing two parameters constructor
-    
-    // Board *b = new Board(3, 5);
-    // unsigned int b_rows = b->get_rows();
-    // unsigned int b_cols = b->get_cols();
-
-    // cout << "Board b rows: " << b_rows << " cols: " << b_cols << endl;
-
-    // if(1){
-    //     // Testing single parameters constructor
-    //     Board c(10);
-    //     unsigned int c_rows = c.get_rows();
-    //     unsigned int c_cols = c.get_cols();
-
-    //     cout << "Board c rows: " << c_rows << " cols: " << c_cols << endl;
-    // }
-    
-
-    // delete a;
-    // delete b;    
+    Board *a = new Board();   
 
     a->show();
     a->post(5, 5, Direction::Vertical, "Hello World");
@@ -217,6 +221,12 @@ int main(void){
 
     a->post(5, 5, Direction::Horizontal, "Hello World");
     a->show();
+
+    a->post(3,5, Direction::Vertical, "Zich");
+    a->show();
+
+    cout << a->read(5, 5, Direction::Horizontal, 11) << endl;
+
     return 0;
 }
 
