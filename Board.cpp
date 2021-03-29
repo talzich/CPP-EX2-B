@@ -16,7 +16,7 @@ using namespace ariel;
 namespace ariel
 {   
     // Default and minimal size for a message board
-    const int DEFAULT_SIZE = 100;
+    const int DEFAULT_SIZE = 10;
     const int MIN_SIZE = 1;
 
     
@@ -31,7 +31,7 @@ namespace ariel
         board.resize(rows);
         
         // Initializing each row of the vector with number of columns and the empty space char
-        for(int i = 0; i < this->rows; i++){
+        for(unsigned int i = 0; i < this->rows; i++){
             board[i].resize(cols, EMPTY_SPACE);
         }
     }
@@ -63,14 +63,15 @@ namespace ariel
     }
     
     // Destructor
-    Board::~Board(){
-        cout << "Destructing: " << this->rows << "X" << this->cols << endl;
-    }
+    Board::~Board(){}
 
     // This method will get row, column, direction and a message as parameters and posts the message in the 
     // appropriate location and diraction in this message board
     int Board::post(unsigned int row, unsigned int col, Direction dir, string msg){
-        return 0;
+        
+        // Length of message
+        int len = msg.size();
+
     }
 
     // This method get row, column, direction and length of a message as parameters and returns the message in the 
@@ -80,13 +81,23 @@ namespace ariel
     }
 
     // This message will print out the entire message board
-    void Board::show(){}
+    void Board::show(){
 
-    int Board::get_rows(){
+        for(size_t i = 0; i < this->rows; i++){
+            for(size_t j = 0; j < this->cols; j++){
+                cout << board[i][j];
+            }
+            cout << endl;
+        }
+
+        cout << endl;
+    }
+
+    unsigned int Board::get_rows(){
         return this->rows;
     }
 
-    int Board::get_cols(){
+    unsigned int Board::get_cols(){
         return this->cols;
     }
 
@@ -96,31 +107,34 @@ int main(void){
 
 
     // Testing default constructor
+
     Board *a = new Board();
-    int a_rows = a->get_rows();
-    int a_cols = a->get_cols();
+    unsigned int a_rows = a->get_rows();
+    unsigned int a_cols = a->get_cols();
 
     cout << "Board a default rows: " << a_rows << " default cols: " << a_cols << endl;
 
     // Testing two parameters constructor
     Board *b = new Board(3, 5);
-    int b_rows = b->get_rows();
-    int b_cols = b->get_cols();
+    unsigned int b_rows = b->get_rows();
+    unsigned int b_cols = b->get_cols();
 
     cout << "Board b rows: " << b_rows << " cols: " << b_cols << endl;
 
     if(1){
         // Testing single parameters constructor
-        Board *c = new Board(10);
-        int c_rows = c->get_rows();
-        int c_cols = c->get_cols();
+        Board c(10);
+        unsigned int c_rows = c.get_rows();
+        unsigned int c_cols = c.get_cols();
 
         cout << "Board c rows: " << c_rows << " cols: " << c_cols << endl;
     }
     
 
-    delete a;
-    delete b;
+    // delete a;
+    // delete b;
+
+    a->show();    
 
 }
 
