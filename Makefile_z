@@ -7,8 +7,9 @@ CXXFLAGS=-std=c++2a -Werror -Wsign-conversion
 all: board
 
 board: Board.cpp Board.hpp Direction.hpp
-	$(CXX) $(CXXFLAGS) board.cpp -o board
+	$(CXX) $(CXXFLAGS) board.cpp -o Board
+	./Board
 
 .PHONY: clean
 clean:
-	rm -f board
+	rm -f Board

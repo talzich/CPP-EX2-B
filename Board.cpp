@@ -39,9 +39,8 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     int vert = (dir == Direction::Vertical);
 
     // If message will not fit in this board vertically
-    if (vert && row_end_pos >= board_rows)
+    if (row_end_pos >= board_rows)
     {
-
         // How bigger do we need our board to be
         size_t diff = static_cast<size_t>(row_end_pos - board_rows);
 
@@ -57,7 +56,7 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     }
 
     // If message will not fit in this board horizontally
-    if (horiz && col_end_pos >= board_cols)
+    if (col_end_pos >= board_cols)
     {
 
         // How bigger do we need our board to be
@@ -167,12 +166,13 @@ string Board::read(unsigned int row, unsigned int col, Direction dir, unsigned i
 
     // Resizing the board, if necessary
     vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
-    
+
     // Updating board size
     this->rows = new_size[ROWS];
     this->cols = new_size[COLS];
 
     string msg;
+
     
     if(dir == Direction::Horizontal){
         for(unsigned int i = 0; i < len; i++){
@@ -231,6 +231,8 @@ unsigned int Board::get_cols()
 //     a->show();
 
 //     cout << a->read(5, 5, Direction::Horizontal, 11) << endl;
+
+//     cout << a->read(34, 100, Direction::Vertical, 5) << endl;
 
 //     return 0;
 // }
