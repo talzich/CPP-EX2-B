@@ -20,8 +20,49 @@ const int MIN_SIZE = 1;
 // Margins of messageboard
 const int MARGIN = 3;
 
+const char EMPTY_SPACE = '_';
+
 void resize_board(unsigned int row, unsigned int col, Direction dir, string msg, Board &b){
 
+    // Length of message
+    unsigned int len = msg.size();
+
+    // At what index message will end for horizontal and vertical message respectively
+    unsigned int col_end_pos = col + len;
+    unsigned int row_end_pos = row + len;
+
+    // Marking directions for shorter access later
+    int horiz = (dir == Direction::Horizontal);
+    int vert = (dir == Direction::Vertical);
+
+    // If message will not fit in this board vertically
+    if (vert && row_end_pos >= b.get_rows())
+    {
+
+        // How bigger do we need our board to be
+        size_t diff = static_cast<size_t>(row_end_pos - b.get_rows());
+
+        size_t new_size = diff + MARGIN;
+
+        // Resizing our board row number and adding margins
+        b.board.resize(new_size);
+    }
+
+    // If message will not fit in this board horizontally
+    if (horiz && col_end_pos >= b.get_cols())
+    {
+
+        // How bigger do we need our board to be
+        size_t diff = static_cast<size_t>(col_end_pos - b.get_cols());
+
+        size_t new_size = diff + MARGIN;
+
+        // Resizing all rows in this board to fit size of new meassage and adding margins
+        for (unsigned int i = 0; i < b.get_rows(); i++)
+        {
+            board[i].resize(new_size, EMPTY_SPACE);
+        }
+    }
 
 }
 
@@ -87,42 +128,7 @@ int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
 
     resize_board(row, col, dir, msg, *this);
 
-    // At what index message will end for horizontal and vertical message respectively
-    unsigned int col_end_pos = col + len;
-    unsigned int row_end_pos = row + len;
-
-    // Marking directions for shorter access later
-    int horiz = (dir == Direction::Horizontal);
-    int vert = (dir == Direction::Vertical);
-
-    // If message will not fit in this board vertically
-    if (vert && row_end_pos >= this->rows)
-    {
-
-        // How bigger do we need our board to be
-        size_t diff = static_cast<size_t>(row_end_pos - this->rows);
-
-        size_t new_size = diff + MARGIN;
-
-        // Resizing our board row number and adding margins
-        board.resize(new_size);
-    }
-
-    // If message will not fit in this board horizontally
-    if (horiz && col_end_pos >= this->cols)
-    {
-
-        // How bigger do we need our board to be
-        size_t diff = static_cast<size_t>(col_end_pos - this->cols);
-
-        size_t new_size = diff + MARGIN;
-
-        // Resizing all rows in this board to fit size of new meassage and adding margins
-        for (unsigned int i = 0; i < this->rows; i++)
-        {
-            board[i].resize(new_size, EMPTY_SPACE);
-        }
-    }
+    
 
     return 0;
 }

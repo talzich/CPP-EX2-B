@@ -9,8 +9,6 @@
 
 namespace ariel{
 
-    const char EMPTY_SPACE = '_';
-
     class Board{
         
         unsigned int rows, cols;
