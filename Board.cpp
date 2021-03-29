@@ -13,13 +13,15 @@
 using namespace std;
 using namespace ariel;
 
-namespace ariel
-{   
-    // Default and minimal size for a message board
-    const int DEFAULT_SIZE = 10;
-    const int MIN_SIZE = 1;
+// Default and minimal size for a message board
+const int DEFAULT_SIZE = 10;
+const int MIN_SIZE = 1;
 
-    
+// Margins of messageboard
+const int MARGIN = 3;
+
+// namespace ariel
+// {   
     // Default constructor
     Board::Board(){
 
@@ -70,8 +72,43 @@ namespace ariel
     int Board::post(unsigned int row, unsigned int col, Direction dir, string msg){
         
         // Length of message
-        int len = msg.size();
+        unsigned int len = msg.size();
 
+        // At what index message will end for horizontal and vertical message respectively
+        unsigned int col_end_pos = col+len;
+        unsigned int row_end_pos = row+len;
+
+        // Marking directions for shorter access later
+        int horiz = (dir==Direction::Horizontal);
+        int vert = (dir==Direction::Vertical);
+
+        // If message will not fit in this board vertically
+        if(vert && row_end_pos >= this->rows){
+            
+            // How bigger do we need our board to be
+            size_t diff = static_cast<size_t>(row_end_pos - this->rows);
+
+            size_t new_size = diff+MARGIN;
+
+            // Resizing our board row number and adding margins
+            board.resize(new_size);
+        }
+
+        // If message will not fit in this board horizontally
+        if(horiz && col_end_pos >= this->cols){
+            
+            // How bigger do we need our board to be
+            size_t diff = static_cast<size_t>(col_end_pos - this->cols);
+            
+            size_t new_size = diff+MARGIN;
+
+            // Resizing all rows in this board to fit size of new meassage and adding margins
+            for(unsigned int i = 0; i < this->rows; i++){
+                board[i].resize(new_size, EMPTY_SPACE);
+            }
+        }
+
+        return 0;
     }
 
     // This method get row, column, direction and length of a message as parameters and returns the message in the 
@@ -101,7 +138,7 @@ namespace ariel
         return this->cols;
     }
 
-}
+//}
 
 int main(void){
 
