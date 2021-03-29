@@ -202,13 +202,11 @@ void Board::show()
     cout << endl;
 }
 
-unsigned int Board::get_rows()
-{
+unsigned int Board::get_rows() const{
     return this->rows;
 }
 
-unsigned int Board::get_cols()
-{
+unsigned int Board::get_cols()const{
     return this->cols;
 }
 
