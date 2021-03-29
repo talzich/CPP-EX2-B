@@ -34,10 +34,6 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     unsigned int board_rows = b.size();
     unsigned int board_cols = b[MIN_SIZE].size();
 
-    // Marking  for shorter access later
-    int horiz = (dir == Direction::Horizontal);
-    int vert = (dir == Direction::Vertical);
-
     // If message will not fit in this board vertically
     if (row_end_pos >= board_rows)
     {
