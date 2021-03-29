@@ -211,22 +211,22 @@ unsigned int Board::get_cols()
     return this->cols;
 }
 
-int main(void){
+// int main(void){
 
-    Board *a = new Board();   
+//     Board *a = new Board();   
 
-    a->show();
-    a->post(5, 5, Direction::Vertical, "Hello World");
-    a->show();
+//     a->show();
+//     a->post(5, 5, Direction::Vertical, "Hello World");
+//     a->show();
 
-    a->post(5, 5, Direction::Horizontal, "Hello World");
-    a->show();
+//     a->post(5, 5, Direction::Horizontal, "Hello World");
+//     a->show();
 
-    a->post(3,5, Direction::Vertical, "Zich");
-    a->show();
+//     a->post(3,5, Direction::Vertical, "Zich");
+//     a->show();
 
-    cout << a->read(5, 5, Direction::Horizontal, 11) << endl;
+//     cout << a->read(5, 5, Direction::Horizontal, 11) << endl;
 
-    return 0;
-}
+//     return 0;
+// }
 
