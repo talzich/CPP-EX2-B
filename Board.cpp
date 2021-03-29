@@ -17,17 +17,15 @@ const int DEFAULT_SIZE = 10;
 const int MIN_SIZE = 1;
 
 // Margins of messageboard
-const int MARGIN = 3;
+const int MARGIN = 5;
 
 const int ROWS = 0;
 const int COLS = 1;
 
 const char EMPTY_SPACE = '_';
 
-vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction dir, string msg, vector< vector<char> > &b){
+vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction dir, unsigned int len, vector< vector<char> > &b){
 
-    // Length of message
-    unsigned int len = msg.size();
 
     // At what index message will end for horizontal and vertical message respectively
     unsigned int col_end_pos = col + len;
@@ -140,7 +138,7 @@ int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
     unsigned int len = msg.size();
 
     // Resizing the board, if necessary
-    vector<unsigned int> new_size = resize_board(row, col, dir, msg, this->board);
+    vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
     
     // Updating board size
     this->rows = new_size[ROWS];
@@ -166,12 +164,13 @@ int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
 // appropriate location and diraction in this message board
 string Board::read(unsigned int row, unsigned int col, Direction dir, unsigned int len)
 {
-    if((row > this->rows) || ((row+len > this->rows) && dir == Direction::Vertical)){
-        throw out_of_range("Message location and/or length exceeds board size");
-    }
-    if((col > this->cols) || ((col+len > this->cols) && dir == Direction::Horizontal)){
-        throw out_of_range("Message location and/or length exceeds board size");
-    }
+
+    // Resizing the board, if necessary
+    vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
+    
+    // Updating board size
+    this->rows = new_size[ROWS];
+    this->cols = new_size[COLS];
 
     string msg;
     
@@ -179,8 +178,13 @@ string Board::read(unsigned int row, unsigned int col, Direction dir, unsigned i
         for(unsigned int i = 0; i < len; i++){
             msg += this->board[row][col+i];
         }
+        return msg;
     }
 
+    
+    for(unsigned int i = 0; i < len; i++){
+        msg += this->board[row+i][col];
+    }
     return msg;
     
 }
@@ -191,6 +195,7 @@ void Board::show()
 
     for (size_t i = 0; i < this->rows; i++)
     {
+        cout << i << '\t';
         for (size_t j = 0; j < this->cols; j++)
         {
             cout << board[i][j];
