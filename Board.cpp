@@ -11,6 +11,7 @@
 #include <vector>
 
 using namespace std;
+using namespace ariel;
 
 namespace ariel
 {   
@@ -69,3 +70,14 @@ namespace ariel
     void Board::show(){}
 
 }
+
+int main(void){
+
+    Board *a = new Board();
+    int rows = a->get_rows();
+    int cols = a->get_cols();
+
+    cout << "Board a default rows: " << rows << " default cols: " << cols << endl;
+
+}
+
