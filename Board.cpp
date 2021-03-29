@@ -63,7 +63,9 @@ namespace ariel
     }
     
     // Destructor
-    Board::~Board(){}
+    Board::~Board(){
+        cout << "Destructing: " << this->rows << "X" << this->cols << endl;
+    }
 
     // This method will get row, column, direction and a message as parameters and posts the message in the 
     // appropriate location and diraction in this message board
@@ -95,24 +97,30 @@ int main(void){
 
     // Testing default constructor
     Board *a = new Board();
-    int rows = a->get_rows();
-    int cols = a->get_cols();
+    int a_rows = a->get_rows();
+    int a_cols = a->get_cols();
 
-    cout << "Board a default rows: " << rows << " default cols: " << cols << endl;
+    cout << "Board a default rows: " << a_rows << " default cols: " << a_cols << endl;
 
     // Testing two parameters constructor
-    Board *a = new Board(3, 5);
-    int rows = a->get_rows();
-    int cols = a->get_cols();
+    Board *b = new Board(3, 5);
+    int b_rows = b->get_rows();
+    int b_cols = b->get_cols();
 
-    cout << "Board a default rows: " << rows << " default cols: " << cols << endl;
+    cout << "Board b rows: " << b_rows << " cols: " << b_cols << endl;
 
-    // Testing one parameters constructor
-    Board *a = new Board(10);
-    int rows = a->get_rows();
-    int cols = a->get_cols();
+    if(1){
+        // Testing single parameters constructor
+        Board *c = new Board(10);
+        int c_rows = c->get_rows();
+        int c_cols = c->get_cols();
 
-    cout << "Board a default rows: " << rows << " default cols: " << cols << endl;
+        cout << "Board c rows: " << c_rows << " cols: " << c_cols << endl;
+    }
+    
+
+    delete a;
+    delete b;
 
 }
 
