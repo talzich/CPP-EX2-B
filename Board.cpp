@@ -1,4 +1,3 @@
-//
 // AUTHOURS: Tal Zichlinsky
 // This file will be used to build a message board class, as described in this assignments README document (https://github.com/cpp-exercises/messageboard-a)
 
@@ -20,9 +19,12 @@ const int MIN_SIZE = 1;
 // Margins of messageboard
 const int MARGIN = 3;
 
+const int ROWS = 0;
+const int COLS = 1;
+
 const char EMPTY_SPACE = '_';
 
-void resize_board(unsigned int row, unsigned int col, Direction dir, string msg, vector< vector<char> > &b){
+vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction dir, string msg, vector< vector<char> > &b){
 
     // Length of message
     unsigned int len = msg.size();
@@ -45,11 +47,15 @@ void resize_board(unsigned int row, unsigned int col, Direction dir, string msg,
         // How bigger do we need our board to be
         size_t diff = static_cast<size_t>(row_end_pos - board_rows);
 
+        size_t old_size = board_rows;
         board_rows += diff + MARGIN;
 
         // Resizing our board row number and adding margins
         b.resize(board_rows);
 
+        for(size_t i = old_size; i < board_rows; i++){
+            b[i].resize(board_cols, EMPTY_SPACE);
+        }
     }
 
     // If message will not fit in this board horizontally
@@ -67,6 +73,9 @@ void resize_board(unsigned int row, unsigned int col, Direction dir, string msg,
             b[i].resize(board_cols, EMPTY_SPACE);
         }
     }
+
+    vector<unsigned int> new_size {board_rows, board_cols};
+    return new_size;
 
 }
 
@@ -130,8 +139,10 @@ int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
     // Length of message
     unsigned int len = msg.size();
 
-    resize_board(row, col, dir, msg, this->board);
-
+    vector<unsigned int> new_size = resize_board(row, col, dir, msg, this->board);
+    
+    this->rows = new_size[ROWS];
+    this->cols = new_size[COLS];
     return 0;
 }
 
@@ -202,6 +213,9 @@ int main(void){
 
     a->show();
     a->post(5, 5, Direction::Vertical, "Hello World");
+    a->show();
+
+    a->post(5, 5, Direction::Horizontal, "Hello World");
     a->show();
     return 0;
 }
