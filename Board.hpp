@@ -14,12 +14,13 @@ namespace ariel{
     class Board{
         
         unsigned int rows, cols;
-        vector< vector<char> > board;
+        std::vector< std::vector<char> > board;
 
         public:
             // Constructors
             Board();
             Board(unsigned int rows, unsigned int cols);
+            Board(unsigned int size);
 
             // Destructor
             ~Board();

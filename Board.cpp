@@ -36,7 +36,7 @@ namespace ariel
         }
     }
 
-    // Constructor
+    // Two parameter constructor
     Board::Board(unsigned int rows, unsigned int cols){   
         
         if(rows < MIN_SIZE){
@@ -49,6 +49,17 @@ namespace ariel
 
         this->rows = rows;
         this->cols = cols;
+    }
+
+    // Single parameter constructor
+    Board::Board(unsigned int size){   
+        
+        if(size < MIN_SIZE){
+            throw invalid_argument("Invalid input: " + to_string(rows));
+        }
+
+        this->rows = size;
+        this->cols = size;
     }
     
     // Destructor
@@ -69,11 +80,35 @@ namespace ariel
     // This message will print out the entire message board
     void Board::show(){}
 
+    int Board::get_rows(){
+        return this->rows;
+    }
+
+    int Board::get_cols(){
+        return this->cols;
+    }
+
 }
 
 int main(void){
 
+
+    // Testing default constructor
     Board *a = new Board();
+    int rows = a->get_rows();
+    int cols = a->get_cols();
+
+    cout << "Board a default rows: " << rows << " default cols: " << cols << endl;
+
+    // Testing two parameters constructor
+    Board *a = new Board(3, 5);
+    int rows = a->get_rows();
+    int cols = a->get_cols();
+
+    cout << "Board a default rows: " << rows << " default cols: " << cols << endl;
+
+    // Testing one parameters constructor
+    Board *a = new Board(10);
     int rows = a->get_rows();
     int cols = a->get_cols();
 
