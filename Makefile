@@ -11,4 +11,4 @@ board: Board.cpp Board.hpp Direction.hpp
 
 .PHONY: clean
 clean:
-	rm board
+	rm -f board
