@@ -38,7 +38,8 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     unsigned int board_rows = b.size();
     unsigned int board_cols = b[MIN_SIZE].size();
 
-    size_t diff = 0, old_size = 0;
+    size_t diff = 0;
+    size_t old_size = 0;
 
     if(row >= board_rows){
         diff = (row-board_rows) + 1;
