@@ -14,19 +14,18 @@
 using namespace std;
 using namespace ariel;
 
-// Default and minimal size for a message board
+//========== Defining constants ==========
 const int DEFAULT_SIZE = 10;
 const int MIN_SIZE = 1;
 
-// Margins of messageboard
-const int MARGIN = 1;
+const int MARGIN = 0;
 
-// Constants for getting new board sizes after board resize
 const int ROWS = 0;
 const int COLS = 1;
 
-// Default char
 const char EMPTY_SPACE = '_';
+//========== Defining constants ==========
+
 
 // This method gets location of requested action (read or post) and resizes the board if location is out of current board size
 vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction dir, unsigned int len, vector< vector<char> > &b){
@@ -85,7 +84,7 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     // If message will not fit in this board horizontally
     if (col_end_pos >= board_cols && dir == Direction::Horizontal)
     {
-        diff = static_cast<size_t>(col_end_pos - board_cols);
+        diff = static_cast<size_t>(col_end_pos - board_cols) + 1;
 
         board_cols += diff + MARGIN;
 
