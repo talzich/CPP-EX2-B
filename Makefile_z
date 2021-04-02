@@ -6,16 +6,16 @@ CXXFLAGS=-std=c++2a
 .PHONY: all
 all: Prog
 
-Prog: Prog.cpp snowman.o Board.o
-	$(CXX) $(CXXFLAGS) Prog.cpp 
+Prog: Prog.o Board.o
+	$(CXX) $(CXXFLAGS) Prog.o Board.o -o Prog
 	./Prog
 
-snowman.o: snowman.cpp snowman.hpp
-	$(CXX) $(CXXFLAGS) -c snowman.cpp -o snowman.o
+Prog.o: Prog.cpp Board.hpp
+	$(CXX) $(CXXFLAGS) -c Prog.cpp -o Prog.o
 
 Board.o: Board.cpp Board.hpp Direction.hpp
 	$(CXX) $(CXXFLAGS) -c Board.cpp -o Board.o
 
 .PHONY: clean
 clean:
-	rm -f test Board main *.o Student*
+	rm -f *.so StudentTest* *.o
