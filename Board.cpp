@@ -19,7 +19,7 @@ const int DEFAULT_SIZE = 10;
 const int MIN_SIZE = 1;
 
 // Margins of messageboard
-const int MARGIN = 5;
+const int MARGIN = 1;
 
 // Constants for getting new board sizes after board resize
 const int ROWS = 0;
@@ -39,13 +39,40 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     unsigned int board_rows = b.size();
     unsigned int board_cols = b[MIN_SIZE].size();
 
-    // If message will not fit in this board vertically
-    if (row_end_pos >= board_rows)
-    {
-        // How bigger do we need our board to be
-        size_t diff = static_cast<size_t>(row_end_pos - board_rows);
+    size_t diff = 0, old_size = 0;
 
-        size_t old_size = board_rows;
+    if(row >= board_rows){
+        diff = (row-board_rows) + 1;
+        old_size = board_rows;
+
+        board_rows += diff + MARGIN;
+
+        // Resizing our board row number and adding margins. For loop fills each row with an empty space charecter
+        b.resize(board_rows);
+        for(size_t i = old_size; i < board_rows; i++){
+            b[i].resize(board_cols, EMPTY_SPACE);
+        }
+        
+    }
+
+    if(col >= board_cols){
+        diff = static_cast<size_t>(col_end_pos - board_cols);
+
+        board_cols += diff + MARGIN;
+
+        // Resizing all rows in this board to fit size of new meassage and adding margins
+        for (unsigned int i = 0; i < board_rows; i++)
+        {
+            b[i].resize(board_cols, EMPTY_SPACE);
+        }
+    }
+
+    // If message will not fit in this board vertically
+    if (row_end_pos >= board_rows && dir == Direction::Vertical)
+    {
+        diff = static_cast<size_t>(row_end_pos - board_rows) + 1;
+
+        old_size = board_rows;
         board_rows += diff + MARGIN;
 
         // Resizing our board row number and adding margins. For loop fills each row with an empty space charecter
@@ -56,10 +83,9 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
     }
 
     // If message will not fit in this board horizontally
-    if (col_end_pos >= board_cols)
+    if (col_end_pos >= board_cols && dir == Direction::Horizontal)
     {
-        // How bigger do we need our board to be
-        size_t diff = static_cast<size_t>(col_end_pos - board_cols);
+        diff = static_cast<size_t>(col_end_pos - board_cols);
 
         board_cols += diff + MARGIN;
 
@@ -67,7 +93,7 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
         for (unsigned int i = 0; i < board_rows; i++)
         {
             b[i].resize(board_cols, EMPTY_SPACE);
-        }
+        }   
     }
 
     // New size for this board
@@ -154,7 +180,6 @@ namespace ariel
         // Resizing the board, if necessary
         vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
 
-        // Updating board size
         this->rows = new_size[ROWS];
         this->cols = new_size[COLS];
 
@@ -166,8 +191,10 @@ namespace ariel
                 this->board[row][col + i] = msg[i];
             }
         }
+
         else
         {
+
             // Posting message
             for (unsigned int i = 0; i < len; i++)
             {
