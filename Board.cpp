@@ -96,7 +96,6 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
         }   
     }
 
-    // New size for this board
     vector<unsigned int> new_size {board_rows, board_cols};
     return new_size;
 }
@@ -174,12 +173,10 @@ namespace ariel
     // appropriate location and diraction in this message board
     int Board::post(unsigned int row, unsigned int col, Direction dir, string msg)
     {
-        // Length of message
         unsigned int len = msg.size();
 
-        // Resizing the board, if necessary
+        // Resizing board, if necessary
         vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
-
         this->rows = new_size[ROWS];
         this->cols = new_size[COLS];
 
@@ -210,15 +207,12 @@ namespace ariel
     {
         // Resizing the board, if necessary
         vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
-
-        // Updating board size
         this->rows = new_size[ROWS];
         this->cols = new_size[COLS];
 
-        // The string to return
         string msg;
 
-        // Retrieving string from board
+        // Appending the returned string, one char at a time, depends on the direction
         if (dir == Direction::Horizontal)
         {
             for (unsigned int i = 0; i < len; i++)
@@ -229,7 +223,7 @@ namespace ariel
         else
         {
             for (unsigned int i = 0; i < len; i++)
-            {
+            {   
                 msg += this->board[row + i][col];
             }
         }
