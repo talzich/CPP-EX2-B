@@ -12,7 +12,7 @@
 using namespace ariel;
 using namespace std;
 
-const Direction HORI = HORI;
+const Direction HORI = Direction::Horizontal;
 
 
 int main(void){
@@ -58,6 +58,7 @@ int main(void){
     b.show();
     system("read");
 
+    //Printing arrow
     for(int i = 1; i < 9; i++){
         b.post(i, 13, HORI, "######");
     }
