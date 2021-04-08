@@ -22,19 +22,20 @@ int main(void){
     unsigned int col;
     string msg = "";
 
-    b.post(3,3, HORI, "Hello");
-    b.post(4,3, HORI, "Harel!");
+    // Startign introduction
+    b.post(9,10, HORI, "Hello");
+    b.post(10,10, HORI, "Harel!");
     b.show();
 
     system("read");
-    b.post(7,3, HORI, "Oh, that's not right, is it?");
+    b.post(7,3, HORI, "Oh, that's not it, right?");
     b.post(8,3, HORI, "I'll fix it than!");
     b.show();
 
     system("read");
     
     b.post(4,3, HORI, "Erel!");
-    b.post(7,3, HORI, "____There, Done!______________");
+    b.post(7,3, HORI, "____There, Done!_________");
     b.post(8,3, HORI, "_________________");
     b.show();
 
@@ -60,7 +61,7 @@ int main(void){
 
     //Printing arrow
     for(int i = 1; i < 9; i++){
-        b.post(i, 11, HORI, "######");
+        b.post(i, 13, HORI, "######");
     }
     b.post(9, 3, HORI,  "########################");
     b.post(10, 3, HORI, " ######################");   
@@ -81,7 +82,8 @@ int main(void){
     b.post(23, 3, HORI, "What would you like to write, and where?");
     b.show();
 
-    char dir = 0;
+    // Interactive posting
+    char dir = '0';
     while(1){
         cout << "Enter row number" << endl;
         cin >> row;
@@ -89,13 +91,19 @@ int main(void){
         cout << "Enter column number" << endl;
         cin >> col;
 
-        while(dir != 'v' && dir != 'h'){
-        cout << "Enter direction v or h" <<endl;
-        cin >> dir;
-        }
-
+        // Clearing stdin
         cin.clear();
         fflush(stdin);
+
+        while(dir != 'v' && dir != 'h'){
+            cout << "Enter direction v or h" <<endl;
+            cin >> dir;
+        }
+
+        // Clearing stdin
+        cin.clear();
+        fflush(stdin);
+
         cout << "Enter message" << endl;
         getline(cin, msg);
 
@@ -107,11 +115,15 @@ int main(void){
         
         case 'h':
             b.post(row, col, HORI, msg);
+            break;
         default:
             perror("Wrong direction has been entered");
             exit(1);
         }
         b.show();
+        
+        // So that in the next iteration, the direction choice will execute
+        dir = '0';
     }
     return 0;
 }

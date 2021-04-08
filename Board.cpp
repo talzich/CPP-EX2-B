@@ -26,17 +26,19 @@ const int COLS = 1;
 const char EMPTY_SPACE = '_';
 //========== Defining constants ==========
 
-
+// Make class method
 // This method gets location of requested action (read or post) and resizes the board if location is out of current board size
-vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction dir, unsigned int len, vector< vector<char> > &b){
+void Board::resize_board(unsigned int row, unsigned int col, Direction dir, unsigned int len){
 
 
     // At what index message will end for horizontal and vertical message respectively
     unsigned int col_end_pos = col + len;
     unsigned int row_end_pos = row + len;
 
-    unsigned int board_rows = b.size();
-    unsigned int board_cols = b[MIN_SIZE].size();
+    
+
+    unsigned int board_rows = this->board.size();
+    unsigned int board_cols = this->board[MIN_SIZE].size();
 
     size_t diff = 0;
     size_t old_size = 0;
@@ -48,9 +50,9 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
         board_rows += diff + MARGIN;
 
         // Resizing our board row number and adding margins. For loop fills each row with an empty space charecter
-        b.resize(board_rows);
+        this->board.resize(board_rows);
         for(size_t i = old_size; i < board_rows; i++){
-            b[i].resize(board_cols, EMPTY_SPACE);
+            this->board[i].resize(board_cols, EMPTY_SPACE);
         }
         
     }
@@ -63,7 +65,7 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
         // Resizing all rows in this board to fit size of new meassage and adding margins
         for (unsigned int i = 0; i < board_rows; i++)
         {
-            b[i].resize(board_cols, EMPTY_SPACE);
+            this->board[i].resize(board_cols, EMPTY_SPACE);
         }
     }
 
@@ -76,9 +78,9 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
         board_rows += diff + MARGIN;
 
         // Resizing our board row number and adding margins. For loop fills each row with an empty space charecter
-        b.resize(board_rows);
+        this->board.resize(board_rows);
         for(size_t i = old_size; i < board_rows; i++){
-            b[i].resize(board_cols, EMPTY_SPACE);
+            this->board[i].resize(board_cols, EMPTY_SPACE);
         }
     }
 
@@ -92,12 +94,12 @@ vector<unsigned int> resize_board(unsigned int row, unsigned int col, Direction 
         // Resizing all rows in this board to fit size of new meassage and adding margins
         for (unsigned int i = 0; i < board_rows; i++)
         {
-            b[i].resize(board_cols, EMPTY_SPACE);
+            this->board[i].resize(board_cols, EMPTY_SPACE);
         }   
     }
 
-    vector<unsigned int> new_size {board_rows, board_cols};
-    return new_size;
+    this->rows = board_rows;
+    this->cols = board_cols;
 }
 
 namespace ariel
@@ -119,6 +121,7 @@ namespace ariel
         }
     }
 
+    // Make default
     // Two parameter constructor
     Board::Board(unsigned int rows, unsigned int cols)
     {
@@ -176,9 +179,7 @@ namespace ariel
         unsigned int len = msg.size();
 
         // Resizing board, if necessary
-        vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
-        this->rows = new_size[ROWS];
-        this->cols = new_size[COLS];
+        resize_board(row, col, dir, len);
 
         if (dir == Direction::Horizontal)
         {
@@ -206,9 +207,7 @@ namespace ariel
     string Board::read(unsigned int row, unsigned int col, Direction dir, unsigned int len)
     {
         // Resizing the board, if necessary
-        vector<unsigned int> new_size = resize_board(row, col, dir, len, this->board);
-        this->rows = new_size[ROWS];
-        this->cols = new_size[COLS];
+        resize_board(row, col, dir, len);
 
         string msg;
 

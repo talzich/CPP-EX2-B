@@ -37,5 +37,7 @@ namespace ariel{
             // Returns number of rows and columns of this board
             unsigned int get_rows() const;
             unsigned int get_cols() const;
+            
+            void resize_board(unsigned int row, unsigned int col, Direction dir, unsigned int len);
     };
 }
